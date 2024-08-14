@@ -1,5 +1,6 @@
 import { VehicleModel } from "@/app/types/vehicle";
 import { stringifyError } from "next/dist/shared/lib/utils";
+import Link from "next/link";
 
 const VehicleModels = async ({ makeId, year }: { makeId: string; year: string }) => {
     try {
@@ -12,6 +13,7 @@ const VehicleModels = async ({ makeId, year }: { makeId: string; year: string })
 
         return (
             <>
+                <Link href={`/`} className="absolute top-16 right-4 border border-gray-300 bg-white text-black p-2 rounded">⬅ go back</Link>
                 <h2 className="text-4xl font-bold mb-8"> Model maker: {data.Results[0]?.Make_Name} - year: {year}</h2>
                 <table className="border-collapse border-spacing-2 border w-3/4 md:w-1/2 lg:w-1/4">
                     <thead className="bg-blue-500 text-white">
