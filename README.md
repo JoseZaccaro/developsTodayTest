@@ -1,36 +1,83 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Next.js Vehicle Filter Application
 
-## Getting Started
+## Overview
 
-First, run the development server:
+This Next.js application allows users to filter vehicle models by type and model year. It uses Tailwind CSS for styling and React's `Suspense` for handling loading states. The application is built using Next.js 13 with the `appRouter` and React Server Components.
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+### Features
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+- **Home Page:** 
+  - Allows users to select a vehicle type and model year from dropdown menus.
+  - Includes a "Next" button that is enabled only when both selections are made.
+  - Navigates to the results page with the selected filters.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+- **Results Page:** 
+  - Displays vehicle models based on the selected type and year.
+  - Uses `Suspense` to handle loading states gracefully.
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+### Architecture
 
-## Learn More
+- **Frontend:** 
+  - **Next.js:** Framework for server-rendered React applications.
+  - **Tailwind CSS:** For styling and responsive design.
+  - **React Suspense:** For handling asynchronous data fetching and loading states.
 
-To learn more about Next.js, take a look at the following resources:
+- **API Integration:**
+  - **Vehicle Types:** Fetched from `https://vpic.nhtsa.dot.gov/api/vehicles/GetMakesForVehicleType/car?format=json`.
+  - **Vehicle Models:** Retrieved using `https://vpic.nhtsa.dot.gov/api/vehicles/GetModelsForMakeIdYear/makeId/{makeId}/modelyear/{year}?format=json`.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+### Setup Instructions
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+1. **Clone the Repository:**
 
-## Deploy on Vercel
+    ```bash
+    git clone https://github.com/yourusername/your-repository.git
+    cd your-repository
+    ```
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+2. **Install Dependencies:**
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+    ```bash
+    npm install
+    ```
+
+3. **Set Up Environment Variables:**
+
+    Create a `.env.local` file in the root directory and add any required environment variables. For this project, no specific environment variables are required.
+
+4. **Run the Development Server:**
+
+    ```bash
+    npm run dev
+    ```
+
+    Open your browser and navigate to `http://localhost:3000` to view the application in development mode.
+
+5. **Build the Application:**
+
+    To create a production build of the application, run:
+
+    ```bash
+    npm run build
+    ```
+
+    After building, you can start the production server with:
+
+    ```bash
+    npm run start
+    ```
+
+    Navigate to `http://localhost:3000` to view the production version of the application.
+
+### Project Structure
+
+- **`app/`**: Contains the application routes and components.
+  - **`result/`**: Contains dynamic route files for displaying vehicle models.
+    - **`[makeId]/`**: Folder for routes based on vehicle type.
+      - **`[year]/`**: Folder for routes based on model year.
+        - **`page.tsx`**: Page component for rendering vehicle models.
+        - **`generateStaticParams.ts`**: Defines static parameters for pre-rendering pages.
+        - **`VehicleModels.tsx`**: Component for fetching and rendering vehicle models on the results page.
+- **`public/`**: Static assets like images and fonts.
+- **`styles/`**: Global and component-specific CSS files.
+- **`next.config.js`**: Next.js configuration file.
